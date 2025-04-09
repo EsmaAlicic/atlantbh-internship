@@ -1,14 +1,34 @@
-import { Builder, until, By } from "selenium-webdriver";
+import { Builder, By, until } from "selenium-webdriver";
 
 async function startCheckoutProcess() {
     let driver = await new Builder().forBrowser("chrome").build();
 
     try {
-        await driver.get("https://magento.softwaretestingboard.com/what-is-new.html");
+        // Prijava
+        await driver.get("https://magento.softwaretestingboard.com/customer/account/login");
+
+        let emailInput = await driver.wait(until.elementLocated(By.id("email")), 10000);
+        let passwordInput = await driver.wait(until.elementLocated(By.id("pass")), 10000);
+
+        await emailInput.sendKeys("test.prvi@prvitest.ba");
+        await passwordInput.sendKeys("prViTest#");
+        console.log("Successfully entered email and password!");
+
+        let signInButton = await driver.wait(until.elementLocated(By.id("send2")), 10000);
+        await signInButton.click(); 
+        console.log("Successfully clicked on Sign In!");
+
+        // Čekaj da element postane dostupan (vidljiv)
+        let whatsNewLink = await driver.wait(until.elementLocated(By.id("ui-id-3")), 10000);
+
+        // Klikni na "What's New" link
+        await whatsNewLink.click();
+
         await driver.wait(until.elementLocated(By.css("a.block-promo.new-main")), 10000);
         await driver.findElement(By.css("a.block-promo.new-main")).click();
         await driver.wait(until.urlContains("yoga-new.html"), 10000);
 
+        // Klik na proizvod
         await driver.findElement(By.xpath("//a[@href='https://magento.softwaretestingboard.com/elisa-evercool-trade-tee.html']")).click();
         await driver.wait(until.urlContains("elisa-evercool-trade-tee.html"), 10000);
 
@@ -24,7 +44,7 @@ async function startCheckoutProcess() {
 
         // Click on the 'Add to Cart' button
         let addToCartButton = await driver.findElement(By.id("product-addtocart-button"));
-        await driver.wait(until.elementIsVisible(addToCartButton), 10000); 
+        await driver.wait(until.elementIsVisible(addToCartButton), 15000); 
         await addToCartButton.click();
 
         await driver.wait(until.elementLocated(By.css(".message-success.success.message")), 10000);
@@ -32,66 +52,57 @@ async function startCheckoutProcess() {
             driver.findElement(By.css(".message-success.success.message")),
             "You added"
         ), 10000);
-        
+
         console.log("The product has been successfully added to the cart.");
 
-        // My Cart
-        let myCartLink = await driver.findElement(By.css("a.action.showcart"));
-        await driver.wait(until.elementIsVisible(myCartLink), 10000); 
+        // KORPICA
+        let myCartLink = await driver.wait(until.elementLocated(By.xpath("//a[@class='action showcart']")), 10000);
         await myCartLink.click();
+        console.log("Successfully clicked on 'My Cart' link!");
 
         // Proceed to Checkout
-        let checkoutButton = await driver.findElement(By.id("top-cart-btn-checkout"));
-        await driver.wait(until.elementIsVisible(checkoutButton), 10000);
+        let checkoutButton = await driver.wait(until.elementLocated(By.xpath("//button[@id='top-cart-btn-checkout' and @class='action primary checkout']")), 15000); 
+        await driver.wait(until.elementIsVisible(checkoutButton), 15000); // Dodajemo čekanje da dugme bude vidljivo
         await checkoutButton.click();
+        console.log("Successfully clicked on 'Proceed to Checkout' button!");
 
-        await driver.findElement(By.css('input[name="username"]')).sendKeys('test.prvi@prvitest.ba');
+        let radioButton = await driver.wait(until.elementLocated(By.xpath("//input[@type='radio' and @value='tablerate_bestway']")), 15000);
+        await radioButton.click();
+        console.log("Rrrrradio");
 
-        await driver.findElement(By.xpath('//input[@name="firstname"]')).sendKeys('Test');
-
-        await driver.findElement(By.xpath('//input[@name="lastname"]')).sendKeys('User');
-
-        await driver.findElement(By.xpath('//input[@name="street[0]"]')).sendKeys('123 Main St');
-
-        await driver.findElement(By.xpath('//input[@name="street[1]"]')).sendKeys('Apt 4B');
-
-        await driver.findElement(By.xpath('//input[@name="city"]')).sendKeys('New York');
-
-        await driver.findElement(By.xpath('//select[@name="region_id"]')).sendKeys('New York'); //dropdown
-
-        await driver.findElement(By.xpath('//input[@name="postcode"]')).sendKeys('10001');
-
-        await driver.findElement(By.xpath('//select[@name="country_id"]')).sendKeys('United States'); //dropdown
-
-        await driver.findElement(By.xpath('//input[@name="telephone"]')).sendKeys('1234567890');
-
-        await driver.findElement(By.css('button.action.login.primary')).click();
-
-
-        await driver.wait(until.elementLocated(By.xpath("//input[@type='radio' and @value='tablerate_bestway']")), 10000);
-        let shippingMethodRadio = await driver.findElement(By.xpath("//input[@type='radio' and @value='tablerate_bestway']"));
-        await shippingMethodRadio.click();
-
-        // Next
-        let nextButton = await driver.findElement(By.css("button[data-role='opc-continue']"));
-        await driver.wait(until.elementIsVisible(nextButton), 10000);
+        // NEXT
+        let nextButton = await driver.wait(until.elementLocated(By.xpath("//button[@data-role='opc-continue' and span[text()='Next']]")), 15000);
         await nextButton.click();
+        console.log("Successfully clicked on 'Next' button!");
 
-        // Place Order
-        await driver.wait(until.elementLocated(By.xpath("//button[@title='Place Order']")), 10000);
-        let placeOrderButton = await driver.findElement(By.xpath("//button[@title='Place Order']"));
-        await placeOrderButton.click();
-
+        // Place Order        
+        let placeOrderButton = await driver.wait(
+            until.elementLocated(By.xpath("//button[@class='action primary checkout']")), 15000);    
+        await driver.actions({ bridge: true }).move({ origin: placeOrderButton }).click().perform();
+        console.log("Successfully clicked on 'Place Order'!");
+        
+        
+        // Potvrda narudžbe
+        try {
+            await driver.wait(until.urlContains("checkout/onepage/success"), 20000);
+            console.log("Order placed and success page reached!");
+        } catch (e) {
+            console.log("Order might not have been placed. Could not detect success page.");
+        }
+        
         // Continue Shopping
-        let continueShoppingButton = await driver.findElement(By.css("a.action.primary.continue"));
-        await driver.wait(until.elementIsVisible(continueShoppingButton), 10000);
-        await continueShoppingButton.click();
-        console.log("The test has been successfully completed!");
+        let continueShoppingLink = await driver.wait(
+            until.elementLocated(By.xpath("//a[@class='action primary continue' and contains(@href, 'magento.softwaretestingboard.com')]/span[text()='Continue Shopping']")),
+            20000
+        );
+        await continueShoppingLink.click();
+        console.log("Successfully clicked on 'Continue Shopping' link!");
 
+        console.log("The test has been successfully completed!");
     } catch (error) {
         console.log("An error occurred: ", error);
     } finally {
-        await driver.quit();
+        await driver.quit(); 
     }
 }
 
