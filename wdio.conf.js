@@ -21,22 +21,26 @@ export const config = {
     // of the config file unless it's absolute.
     //
     suites: {
-        smoke: {
-            register: [
+        smoke: [
+                './test/specs/smoke/register.spec.mjs',
+                './test/specs/smoke/login.spec.mjs',
+                './test/specs/smoke/homepage.spec.mjs'
+        ],
+       regression: [
+                './test/specs/regression/search.spec.js'
+        ],
+       register: [
                 './test/specs/smoke/register.spec.mjs'
             ],
-            login: [
+       login: [
                 './test/specs/smoke/login.spec.mjs'
             ],
-            homePage: [
+       homePage: [
                 './test/specs/smoke/homepage.spec.mjs'
-            ]
-        },
-        regression: {
-            search: [
+            ],
+       search: [
                 './test/specs/regression/search.spec.js'
             ]
-        }
     },
     //
     // ============
