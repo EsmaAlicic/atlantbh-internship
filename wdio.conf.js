@@ -20,13 +20,24 @@ export const config = {
     // The path of the spec files will be resolved relative from the directory of
     // of the config file unless it's absolute.
     //
-    specs: [
-        './test/specs/**/*.js'
-    ],
-    // Patterns to exclude.
-    exclude: [
-        // 'path/to/excluded/files'
-    ],
+    suites: {
+        smoke: {
+            register: [
+                './test/specs/smoke/register.spec.mjs'
+            ],
+            login: [
+                './test/specs/smoke/login.spec.mjs'
+            ],
+            homePage: [
+                './test/specs/smoke/homepage.spec.mjs'
+            ]
+        },
+        regression: {
+            search: [
+                './test/specs/regression/search.spec.js'
+            ]
+        }
+    },
     //
     // ============
     // Capabilities
