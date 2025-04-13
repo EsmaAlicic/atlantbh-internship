@@ -22,25 +22,29 @@ export const config = {
     //
     suites: {
         smoke: [
-                './test/specs/smoke/register.spec.mjs',
-                './test/specs/smoke/login.spec.mjs',
-                './test/specs/smoke/homepage.spec.mjs'
+            './test/specs/smoke/newUserRegistration.spec.mjs',
+            './test/specs/smoke/addProductToCart.spec.mjs',
+            './test/specs/smoke/checkout.spec.mjs',
+            './test/specs/smoke/SignOut.spec.mjs'
         ],
-       regression: [
-                './test/specs/regression/search.spec.js'
+        regression: [
+            './test/specs/regression/search.spec.mjs'
         ],
-       register: [
-                './test/specs/smoke/register.spec.mjs'
-            ],
-       login: [
-                './test/specs/smoke/login.spec.mjs'
-            ],
-       homePage: [
-                './test/specs/smoke/homepage.spec.mjs'
-            ],
-       search: [
-                './test/specs/regression/search.spec.js'
-            ]
+        register: [
+            './test/specs/smoke/newUserRegistration.spec.mjs'
+            ],              
+        addProduct: [
+            './test/specs/smoke/addProductToCart.spec.mjs'
+        ],
+        checkout: [
+            './test/specs/smoke/checkout.spec.mjs'
+        ],
+        signOut: [
+            './test/specs/smoke/signOut.spec.mjs'
+        ],
+        search: [
+            './test/specs/regression/search.spec.mjs'
+        ]
     },
     //
     // ============
