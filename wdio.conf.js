@@ -28,7 +28,8 @@ export const config = {
             './test/specs/smoke/SignOut.spec.mjs'
         ],
         regression: [
-            './test/specs/regression/search.spec.mjs'
+            './test/specs/regression/searchItemCaseSensitive.spec.mjs',
+            './test/specs/regression/removeProductFromCart.spec.mjs'
         ],
         register: [
             './test/specs/smoke/newUserRegistration.spec.mjs'
@@ -43,7 +44,10 @@ export const config = {
             './test/specs/smoke/signOut.spec.mjs'
         ],
         search: [
-            './test/specs/regression/search.spec.mjs'
+            './test/specs/regression/searchItemCaseSensitive.spec.mjs'
+        ],
+        remove: [
+            './test/specs/regression/removeProductFromCart.spec.mjs'
         ]
     },
     //
