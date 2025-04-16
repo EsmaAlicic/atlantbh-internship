@@ -2,7 +2,7 @@
   "name": "atlantbh-internship",
   "type": "module",
   "scripts": {
-    "wdio": "wdio run ./wdio.conf.js",
+    "wdio": "wdio run ./wdio.conf.js --suite %npm_config_suite%",
     "test": "jasmine"
   },
   "devDependencies": {

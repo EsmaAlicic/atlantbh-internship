@@ -1,37 +1,60 @@
-import LoginPage from '../../pageobjects/LoginPage';
-import ProductPage from '../../pageobjects/ProductPage';
-import CartPage from '../../pageobjects/CartPage';
-import CheckoutPage from '../../pageobjects/CheckoutPage';
-import ConfirmationPage from '../../pageobjects/ConfirmationPage';
+import { Builder } from "selenium-webdriver";
+import LoginPage from '../../pageobjects/LoginPage.js';
+import CheckoutPage from '../../pageobjects/CheckoutPage.js';
+import AddToCartPage from "../../pageobjects/AddToCartPage.js";
 
-describe('Checkout Process', () => {
-    it('should complete the checkout process', async () => {
-        await LoginPage.open();
-        await LoginPage.login('test.prvi@prvitest.ba', 'prViTest#');
+const loginPage = new LoginPage(driver);
+const addToCartPage = new AddToCartPage(driver);
+const checkoutPage = new CheckoutPage(driver);
 
-        // Izbor proizvoda i dodavanje u korpu
-        await browser.url('https://magento.softwaretestingboard.com/whats-new.html');
-        await ProductPage.selectSize();
-        await ProductPage.selectColor();
-        await ProductPage.addToCart();
-        await ProductPage.waitForSuccessMessage();
+describe("E-commerce Checkout Flow", () => {
+    let driver;
+    let addToCartPage;
+    let loginPage;
+    let checkoutPage;
 
-        // Provjera korpe i checkout
-        await CartPage.goToCart();
-        await CartPage.proceedToCheckout();
+    fit(async () => {
+        driver = await new Builder().forBrowser("chrome").build();
+        console.log('Driver check!' + driver);
+    });
 
-        // Checkout i potvrda narudžbe
-        await CheckoutPage.selectShippingMethod();
-        await CheckoutPage.clickNext();
-        await CheckoutPage.placeOrder();
+    afterAll(async () => {
+        await driver.quit();
+    });
 
-        // Potvrda narudžbe
-        await browser.waitUntil(async () => {
-            return await browser.getUrl().includes('checkout/onepage/success');
-        }, 20000);
+    it('Should sign in successfully', async () => {
+        await loginPage.open();
+        await loginPage.clickSignInLink();
 
-        await ConfirmationPage.continueShopping();
+        await loginPage.enterEmail('first.test@gmail.com');
+        await loginPage.enterPassword('fIrstTEst#');
+        await loginPage.clickSignIn();
+        console.log('Signed in successfully!');
+    });
 
-        console.log("Test has been successfully completed!");
+    it("Should successfully add a product to the cart", async () => {
+        await addToCartPage.open();
+        await addToCartPage.navigateToProduct();
+        await addToCartPage.selectOptions();
+        await addToCartPage.addToCart();
+        await addToCartPage.isProductAdded();
+        console.log("The product has been successfully added to the cart.");
+    });
+
+    it("Should complete the checkout process", async () => {
+        await checkoutPage.goToCart();
+        await checkoutPage.proceedToCheckout();
+
+        await checkoutPage.selectShippingMethod();
+        await checkoutPage.clickNext();
+        await checkoutPage.placeOrder();
+
+        await driver.wait(async () => {
+            return (await driver.getCurrentUrl()).includes("checkout/onepage/success");
+        }, 10000);
+
+        await checkoutPage.continueShopping();
+
+        console.log("Checkout process completed successfully!");
     });
 });

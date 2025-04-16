@@ -5,6 +5,7 @@ export const config = {
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
+    baseUrl: 'https://magento.softwaretestingboard.com',
     //
     // ==================
     // Specify Test Files

@@ -1,4 +1,4 @@
-import { Builder } from 'selenium-webdriver';
+import { Builder, By } from 'selenium-webdriver';
 import LoginPage from '../../pageobjects/LoginPage.js';
 import AccountPage from '../../pageobjects/AccountPage.js';
 
@@ -17,14 +17,18 @@ describe('Sign Out Test', () => {
         await driver.quit();
     });
 
-    it('should sign in and sign out successfully', async () => {
+    it('should sign in successfully', async () => {
         await loginPage.open();
-        await loginPage.enterEmail('test.prvi@prvitest.ba');
-        await loginPage.enterPassword('prViTest#');
+        console.log("Opened base URL");
+        await loginPage.clickSignInLink();
+
+        await loginPage.enterEmail('first.test@gmail.com');
+        await loginPage.enterPassword('fIrstTEst#');
         await loginPage.clickSignIn();
         console.log('Signed in successfully!');
+    });
 
-        await accountPage.waitForDashboard();
+    it('should sign out successfully', async () => {
         await accountPage.openDropdownMenu();
         await accountPage.clickSignOut();
         console.log('Signed out successfully!');

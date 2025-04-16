@@ -5,18 +5,16 @@ export default class AccountPage {
         this.driver = driver;
     }
 
-    async waitForDashboard() {
-        await this.driver.wait(until.urlContains('customer/account'), 10000);
-    }
-
     async openDropdownMenu() {
-        let changeButton = await this.driver.wait(until.elementLocated(By.css('button.action.switch')), 10000);
-        await changeButton.click();
+        const toggleButton = await this.driver.findElement(By.css('button.action.switch'));
+        await toggleButton.click();
+        const dropdown = await this.driver.wait(until.elementLocated(By.css('.customer-menu')));
+        await this.driver.wait(until.elementIsVisible(dropdown));
     }
 
     async clickSignOut() {
-        await this.driver.wait(until.elementLocated(By.css('.customer-menu')), 10000);
-        let signOutLink = await this.driver.wait(until.elementLocated(By.xpath("//a[contains(text(), 'Sign Out')]")), 10000);
+        await this.driver.wait(until.elementLocated(By.css('.customer-menu')));
+        let signOutLink = await this.driver.wait(until.elementLocated(By.xpath("//a[contains(text(), 'Sign Out')]")));
         await signOutLink.click();
     }
 }

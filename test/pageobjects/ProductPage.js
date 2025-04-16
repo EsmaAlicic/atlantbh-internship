@@ -19,7 +19,7 @@ class ProductPage {
     async waitForSuccessMessage() {
         await browser.waitUntil(async () => {
             return (await this.messageSuccess.getText()).includes('You added');
-        }, 10000);
+        });
     }
 }
 

@@ -3,13 +3,12 @@ import { By, until } from "selenium-webdriver";
 export default class RegisterPage {
     constructor(driver) {
         this.driver = driver;
-        this.url = "https://magento.softwaretestingboard.com/what-is-new.html";
+        this.baseUrl = browser.options.baseUrl;
     }
 
-    // GETTERI
     get createAccountLink() {
-        return this.driver.findElement(By.xpath('//a[@href="https://magento.softwaretestingboard.com/customer/account/create/"]'));
-    }
+        return this.driver.findElement(By.xpath("//a[text()='Create an Account']"));
+    }    
 
     get firstNameInput() {
         return this.driver.findElement(By.id("firstname"));
@@ -35,9 +34,8 @@ export default class RegisterPage {
         return this.driver.findElement(By.css("button.action.submit.primary[title='Create an Account']"));
     }
 
-    // METODE
     async open() {
-        await this.driver.get(this.url);
+        await this.driver.get(this.baseUrl);
     }
 
     async clickCreateAccount() {
@@ -46,7 +44,7 @@ export default class RegisterPage {
     }
 
     async fillForm(firstName, lastName, email, password) {
-        await this.driver.wait(until.elementLocated(By.id("firstname")), 10000);
+        await this.driver.wait(until.elementLocated(By.id("firstname")));
         await this.firstNameInput.then(el => el.sendKeys(firstName));
         await this.lastNameInput.then(el => el.sendKeys(lastName));
         await this.emailInput.then(el => el.sendKeys(email));
@@ -55,11 +53,11 @@ export default class RegisterPage {
     }
 
     async submitForm() {
-        await this.driver.wait(until.elementLocated(By.css("button.action.submit.primary[title='Create an Account']")), 10000);
+        await this.driver.wait(until.elementLocated(By.css("button.action.submit.primary[title='Create an Account']")));
         await this.submitButton.then(btn => btn.click());
     }
 
     async isAccountCreated() {
-        await this.driver.wait(until.urlContains("customer/account"), 10000);
+        await this.driver.wait(until.urlContains("customer/account"));
     }
 }
