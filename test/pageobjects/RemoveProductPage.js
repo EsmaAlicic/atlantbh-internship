@@ -58,12 +58,12 @@ export default class RemoveProductPage {
 
     async addToCart(size, color) {
         const sizeOption = await this.getSizeOption(size);
-        await this.driver.wait(until.elementIsVisible(sizeOption), 5000);
+        await this.driver.wait(until.elementIsVisible(sizeOption), 1000);
         await this.driver.executeScript("arguments[0].scrollIntoView(true);", sizeOption);
         await sizeOption.click();
 
         const colorOption = await this.getColorOption(color);
-        await this.driver.wait(until.elementIsVisible(colorOption), 5000);
+        await this.driver.wait(until.elementIsVisible(colorOption));
         await this.driver.executeScript("arguments[0].scrollIntoView(true);", colorOption);
         await colorOption.click();
 
@@ -75,19 +75,19 @@ export default class RemoveProductPage {
     async openCart() {
         const cartIcon = await this.getCartIcon();
         await cartIcon.click();
-        await this.driver.wait(until.elementLocated(By.css('a.action.viewcart')), 5000);
+        await this.driver.wait(until.elementLocated(By.css('a.action.viewcart')));
         const viewCart = await this.getViewCartLink();
         await viewCart.click();
     }
 
     async removeProductFromCart() {
-        const removeBtn = await this.driver.wait(until.elementLocated(By.css('a.action.action-delete[title="Remove item"]')), 5000);
-        await this.driver.wait(until.elementIsVisible(removeBtn), 5000);
+        const removeBtn = await this.driver.wait(until.elementLocated(By.css('a.action.action-delete[title="Remove item"]')));
+        await this.driver.wait(until.elementIsVisible(removeBtn));
         await this.driver.executeScript("arguments[0].scrollIntoView(true);", removeBtn);
         await removeBtn.click();
 
         console.log("Product successfully removed from the cart!");
 
-        await this.driver.wait(until.stalenessOf(removeBtn), 5000);
+        await this.driver.wait(until.stalenessOf(removeBtn));
     }
 }
