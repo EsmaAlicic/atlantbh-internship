@@ -19,15 +19,19 @@ describe("Remove product from cart test", () => {
         await removeProductPage.open();
 
         await removeProductPage.selectCategory("Jackets");
-        await driver.wait(until.urlContains("jackets"), 5000);
+        const currentUrl = await driver.getCurrentUrl();
+        expect(currentUrl).toContain("jackets");
 
         await removeProductPage.selectProduct("Olivia 1/4 Zip Light Jacket");
-        await driver.wait(until.urlContains("olivia-1-4-zip-light-jacket"), 5000);
+        const currentUrl2 = await driver.getCurrentUrl();
+        expect(currentUrl2).toContain("olivia-1-4-zip-light-jacket");
+
 
         await removeProductPage.addToCart("S", "Black");
 
         await removeProductPage.openCart();
-        await driver.wait(until.urlContains("checkout/cart"), 5000);
+        const currentUrl3 = await driver.getCurrentUrl();
+        expect(currentUrl3).toContain("checkout/cart");
 
         await removeProductPage.removeProductFromCart();
 
