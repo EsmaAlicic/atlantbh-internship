@@ -20,6 +20,9 @@ describe("Add to Cart Test", () => {
         await addToCartPage.selectOptions();
         await addToCartPage.addToCart();
         await addToCartPage.isProductAdded();
+
+        const isProductAdded = await addToCartPage.isProductAdded();
+        expect(isProductAdded).toBe(true); 
         console.log("The product has been successfully added to the cart.");
     });
 });
