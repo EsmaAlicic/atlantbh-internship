@@ -14,7 +14,7 @@ describe("Search Item Count Case Insensitivity Test", () => {
         await driver.quit();
     });
 
-    it("should return same item count regardless of case used in search term", async () => {
+    it("Should return same item count regardless of case used in search term", async () => {
         await searchPage.open();
 
         const countLower = await searchPage.searchItem("jacket");

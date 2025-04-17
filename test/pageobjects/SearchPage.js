@@ -6,7 +6,7 @@ export default class SearchPage {
         this.url = "https://magento.softwaretestingboard.com";
     }
 
-    // GETTERI
+    // GETTERS
     get searchInput() {
         return this.driver.findElement(By.id("search"));
     }
@@ -15,7 +15,7 @@ export default class SearchPage {
         return this.driver.findElement(By.css(".toolbar-amount .toolbar-number:nth-of-type(3)"));
     }
 
-    // METODE
+    // METHODS
     async open() {
         await this.driver.get(this.url);
         await this.driver.wait(until.elementLocated(By.id("search")), 10000);
