@@ -1,9 +1,4 @@
-class CheckoutPage {
-    constructor(driver) {
-        this.driver = driver;
-        this.baseUrl = browser.options.baseUrl;
-    }
-    // Locators for different elements
+export default class CheckoutPage {
     get radioButton() { 
         return $('//input[@type="radio" and @value="tablerate_bestway"]'); 
     }
@@ -21,7 +16,7 @@ class CheckoutPage {
     }
 
     get myCartLink() { 
-        return $('//a[@class="action showcart"]'); 
+        return $('//a[contains(@class, "showcart")]'); 
     }
 
     get checkoutButton() { 
@@ -60,5 +55,3 @@ class CheckoutPage {
         await this.checkoutButton.click();
     }
 }
-
-export default CheckoutPage();

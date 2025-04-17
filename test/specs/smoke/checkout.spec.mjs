@@ -17,7 +17,7 @@ describe("E-commerce Checkout Flow", () => {
         driver = await new Builder().forBrowser("chrome").build();
         console.log('Driver check!' + driver);
     });
-
+    
     afterAll(async () => {
         await driver.quit();
     });
