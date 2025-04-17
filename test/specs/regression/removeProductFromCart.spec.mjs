@@ -32,7 +32,9 @@ describe("Remove product from cart test", () => {
         await removeProductPage.openCart();
         const currentUrl3 = await driver.getCurrentUrl();
         expect(currentUrl3).toContain("checkout/cart");
+    });
 
+    it("Should successfully remove product from the cart", async () => {
         await removeProductPage.removeProductFromCart();
 
         const removeElements = await driver.findElements(By.css('a.action.action-delete[title="Remove item"]'));
