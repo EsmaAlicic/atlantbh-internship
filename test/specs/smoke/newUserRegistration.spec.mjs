@@ -1,17 +1,19 @@
-import { Builder } from "selenium-webdriver";
 import RegisterPage from '../../pageobjects/RegisterPage.js';
 
 describe("User Registration Test", () => {
-    let driver;
     let registerPage;
 
+    // SETUP
     beforeAll(async () => {
-        driver = await new Builder().forBrowser("chrome").build();
-        registerPage = new RegisterPage(driver);
+        registerPage = new RegisterPage();
     });
 
     afterAll(async () => {
-        await driver.quit();
+        try {
+          await browser.quit();
+        } catch (err) {
+          console.log('Error closing the session:', err);
+        }
     });
 
     it("Should successfully register a new user", async () => {
