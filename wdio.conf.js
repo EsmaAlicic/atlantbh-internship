@@ -33,7 +33,7 @@ export const config = {
             './test/specs/regression/removeProductFromCart.spec.mjs'
         ],
         register: [
-            './test/specs/smoke/newUserRegistration.spec.mjs'
+            './test/specs/ui/smoke/newUserRegistration.spec.mjs'
             ],              
         addProduct: [
             './test/specs/smoke/addProductToCart.spec.mjs'

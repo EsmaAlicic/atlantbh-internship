@@ -1,7 +1,7 @@
 export default {
-  spec_dir: "spec",
+  spec_dir: "test/specs",
   spec_files: [
-    "**/*[sS]pec.?(m)js"
+    "**/smoke/activities.spec.mjs"
   ],
   helpers: [
     "helpers/**/*.?(m)js"

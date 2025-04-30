@@ -1,4 +1,4 @@
-import RegisterPage from '../../pageobjects/RegisterPage.js';
+import RegisterPage from '../../../../../pageobjects/RegisterPage.js';
 
 describe("User Registration Test", () => {
     let registerPage;
