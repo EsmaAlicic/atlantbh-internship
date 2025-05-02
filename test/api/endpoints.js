@@ -5,4 +5,30 @@ const getActivities = {
   url: `${baseUrl}/Activities`,
 };
 
-export { getActivities };
+const createActivity = {
+  method: 'POST',
+  url: `${baseUrl}/Activities`,
+};
+
+const getActivityById = (id) => ({
+  method: 'GET',
+  url: `${baseUrl}/Activities/${id}`,
+});
+
+const updateActivity = (id) => ({
+  method: 'PUT',
+  url: `${baseUrl}/Activities/${id}`,
+});
+
+const deleteActivity = (id) => ({
+  method: 'DELETE',
+  url: `${baseUrl}/Activities/${id}`,
+});
+
+export {
+  getActivities,
+  createActivity,
+  getActivityById,
+  updateActivity,
+  deleteActivity
+};
