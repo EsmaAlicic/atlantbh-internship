@@ -1,5 +1,5 @@
 import httpClient from '../api/httpClient.js';  
-import { getActivities, createActivity, getActivityById, updateActivity } from '../api/endpoints.js';
+import { getActivities, createActivity, getActivityById, updateActivity, deleteActivity } from '../api/endpoints.js';
 
 export async function getActivitiesData() {
     try {const response = await httpClient.get(getActivities.url);
@@ -43,6 +43,20 @@ export async function updateActivityData(id, activityData) {
       },
     });
     console.log(`Updated activity with ID ${id}:`, response.data);
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    return error.response;
+  }
+}
+
+export async function deleteActivityData(id) {
+  try {
+    const endpointConfig = deleteActivity(id);
+    const response = await httpClient({
+      method: endpointConfig.method,
+      url: endpointConfig.url,
+    });
+    console.log(`Deleted activity with ID ${id}:`, response.data);
     return { status: response.status, data: response.data };
   } catch (error) {
     return error.response;

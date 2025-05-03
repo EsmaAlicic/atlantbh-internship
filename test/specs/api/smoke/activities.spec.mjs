@@ -1,4 +1,4 @@
-import { getActivitiesData, createActivityData, getActivityByIdData, updateActivityData} from '../../../services/Activities.js';
+import { getActivitiesData, createActivityData, getActivityByIdData, updateActivityData, deleteActivityData} from '../../../services/Activities.js';
 import { newActivity, getId, updatedActivityData } from '../../../api/activityTestData.js';
 
 describe('Activities API', () => {
@@ -54,5 +54,23 @@ describe('GET /api/v1/Activities/{id}', () => {
       expect(updateResponse.data.dueDate.endsWith('Z')).toBe(true);
       expect(updateResponse.data.completed).toBe(updatedActivityData.completed);
     });
+  });
+});
+
+describe('DELETE /api/v1/Activities/{id}', () => {
+  it('Should return 200 after deleting an activity', async () => {
+    const activityIdToDelete = getId(); 
+
+    const checkResponse = await getActivityByIdData(activityIdToDelete);
+    expect(checkResponse.status).toBe(200);
+
+    const deleteResponse = await deleteActivityData(activityIdToDelete);
+    expect(deleteResponse.status).toBe(200); 
+
+    const getResponse = await getActivityByIdData(activityIdToDelete);
+    expect(getResponse.status).toBe(200); 
+
+    console.log('Delete Response:', deleteResponse);
+
   });
 });
