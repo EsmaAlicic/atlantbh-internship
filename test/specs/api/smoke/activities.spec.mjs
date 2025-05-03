@@ -1,5 +1,5 @@
-import { getActivitiesData, createActivityData } from '../../../services/Activities.js';
-import { newActivity } from '../../../api/activityTestData.js';
+import { getActivitiesData, createActivityData, getActivityByIdData} from '../../../services/Activities.js';
+import { newActivity, getId } from '../../../api/activityTestData.js';
 
 describe('Activities API', () => {
 
@@ -29,4 +29,17 @@ describe('POST /api/v1/Activities', () => {
   });
 });
 
+describe('GET /api/v1/Activities/{id}', () => {
+  it('Should return 200 and the activity data for a valid ID', async () => {
+    const validId = getId();
+    const response = await getActivityByIdData(validId);
+    expect(response.status).toBe(200);
+    expect(response.data.hasOwnProperty('id')).toBe(true);
+    expect(response.data.id).toBe(validId);
+    expect(response.data.hasOwnProperty('title')).toBe(true);
+    expect(response.data.hasOwnProperty('dueDate')).toBe(true);
+    expect(response.data.hasOwnProperty('completed')).toBe(true);
+    console.log('GetById activity:', response.data);
+  });
+});
 });
