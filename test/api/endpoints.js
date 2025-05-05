@@ -57,6 +57,32 @@ const deleteAuthor = (id) => ({
   url: `${baseUrl}/Authors/${id}`,
 });
 
+// ===== Books Endpoints =====
+const getBooks = {
+  method: 'GET',
+  url: `${baseUrl}/Books`,
+};
+
+const createBook = {
+  method: 'POST',
+  url: `${baseUrl}/Books`,
+};
+
+const getBookById = (id) => ({
+  method: 'GET',
+  url: `${baseUrl}/Books/${id}`,
+});
+
+const updateBook = (id) => ({
+  method: 'PUT',
+  url: `${baseUrl}/Books/${id}`,
+});
+
+const deleteBook = (id) => ({
+  method: 'DELETE',
+  url: `${baseUrl}/Books/${id}`,
+});
+
 export {
   // Activities
   getActivities,
@@ -65,11 +91,18 @@ export {
   updateActivity,
   deleteActivity,
 
-  //Authors
+  // Authors
   getAuthors,
   createAuthor,
   getAuthorsByBookId,
   getAuthorById,
   updateAuthor,
   deleteAuthor,
+
+  // Books
+  getBooks,
+  createBook,
+  getBookById,
+  updateBook,
+  deleteBook,
 };
