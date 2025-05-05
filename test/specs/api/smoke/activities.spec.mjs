@@ -1,5 +1,16 @@
-import { getActivitiesData, createActivityData, getActivityByIdData, updateActivityData, deleteActivityData} from '../../../services/Activities.js';
-import { newActivity, getId, updatedActivityData } from '../../../api/activityTestData.js';
+import { 
+  getActivitiesData, 
+  createActivityData, 
+  getActivityByIdData, 
+  updateActivityData, 
+  deleteActivityData
+} from '../../../services/Activities.js';
+
+import { 
+  newActivity, 
+  getId, 
+  updatedActivityData 
+} from '../../../api/activityTestData.js';
 
 describe('Activities API', () => {
 
