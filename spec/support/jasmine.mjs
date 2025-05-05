@@ -3,8 +3,8 @@ export default {
   spec_files: [
     //"**/smoke/activities.spec.mjs",
     //"**/smoke/authors.spec.mjs",
-    "**/smoke/books.spec.mjs"
-
+    //"**/smoke/books.spec.mjs",
+    "**/smoke/coverphotos.spec.mjs"
   ],
   helpers: [
     "helpers/**/*.?(m)js"
