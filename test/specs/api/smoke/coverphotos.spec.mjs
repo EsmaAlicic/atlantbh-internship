@@ -5,7 +5,7 @@ import {
     getCoverPhotosByBookIdData,
     updateCoverPhotoData,
     deleteCoverPhotoData
-  } from '../../../services/CoverPhoto.js';
+  } from '../../../services/CoverPhotos.js';
   
   import {
     newCoverPhoto,
@@ -79,7 +79,7 @@ import {
         expect(deleteResponse.status).toBe(200);
   
         const getResponse = await getCoverPhotoByIdData(coverPhotoIdToDelete);
-        expect(getResponse.status).toBe(200); // API ne vraća 404, već prazan objekat
+        expect(getResponse.status).toBe(200);
         console.log('Delete Response:', deleteResponse);
       });
     });

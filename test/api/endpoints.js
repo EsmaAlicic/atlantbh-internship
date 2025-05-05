@@ -114,6 +114,32 @@ const deleteCoverPhoto = (id) => ({
   url: `${baseUrl}/CoverPhotos/${id}`,
 });
 
+// ===== Users Endpoints =====
+const getUsers = {
+  method: 'GET',
+  url: `${baseUrl}/Users`,
+};
+
+const createUser = {
+  method: 'POST',
+  url: `${baseUrl}/Users`,
+};
+
+const getUserById = (id) => ({
+  method: 'GET',
+  url: `${baseUrl}/Users/${id}`,
+});
+
+const updateUser = (id) => ({
+  method: 'PUT',
+  url: `${baseUrl}/Users/${id}`,
+});
+
+const deleteUser = (id) => ({
+  method: 'DELETE',
+  url: `${baseUrl}/Users/${id}`,
+});
+
 export {
   // Activities
   getActivities,
@@ -143,5 +169,12 @@ export {
   getCoverPhotoById,
   getCoverPhotosByBookId,
   updateCoverPhoto,
-  deleteCoverPhoto
+  deleteCoverPhoto,
+
+  // Users
+  getUsers,
+  createUser,
+  getUserById,
+  updateUser,
+  deleteUser,
 };
