@@ -1,6 +1,11 @@
 export default {
   spec_dir: "test/specs",
   spec_files: [
+    "**/regression/activities.spec.mjs",
+    "**/regression/authors.spec.mjs",
+    "**/regression/books.spec.mjs",
+    "**/regression/coverphotos.spec.mjs",
+    "**/regression/users.spec.mjs",
     "**/smoke/activities.spec.mjs",
     "**/smoke/authors.spec.mjs",
     "**/smoke/books.spec.mjs",
