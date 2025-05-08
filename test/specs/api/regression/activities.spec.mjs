@@ -9,7 +9,7 @@ import {
   newActivity, 
   getId, 
   updatedActivityData 
-} from '../../../api/activityTestData.js';
+} from '../../../apiData/activityTestData.js';
 
 describe('Regression Tests - Activities API', () => {
   it('Should return 200 and the created activity', async () => {

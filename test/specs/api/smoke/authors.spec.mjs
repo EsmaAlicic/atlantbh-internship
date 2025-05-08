@@ -10,4 +10,3 @@ describe('Smoke Tests - Authors API', () => {
     expect(Array.isArray(response.data)).toBe(true);
   });
 });
-  

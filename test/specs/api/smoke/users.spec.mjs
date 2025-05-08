@@ -4,7 +4,7 @@ import {
 
 import {
   newUser
-} from '../../../api/userTestData.js';
+} from '../../../apiData/userTestData.js';
   
 describe('Smoke Tests - Users API', () => {
   it('Should return 200 and the created user', async () => {

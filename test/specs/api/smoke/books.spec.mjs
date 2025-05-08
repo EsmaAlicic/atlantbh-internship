@@ -4,7 +4,7 @@ import {
   
 import {
   newBook
-} from '../../../api/bookTestData.js';
+} from '../../../apiData/bookTestData.js';
   
 describe('Smoke Tests - Books API', () => {
   it('Should return 200 and the created book', async () => {

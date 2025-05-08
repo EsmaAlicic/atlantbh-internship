@@ -3,6 +3,8 @@
   "type": "module",
   "scripts": {
     "wdio": "wdio run ./wdio.conf.js --suite %npm_config_suite%",
+    "jasmine-api": "wdio run ./wdio.conf.js --suite jasmine-api-tests",
+
     "test": "jasmine tests/specs/api/smoke/*.test.mjs"
   },
   "devDependencies": {

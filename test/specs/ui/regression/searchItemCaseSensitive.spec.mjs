@@ -1,18 +1,11 @@
-import { Builder } from "selenium-webdriver";
 import SearchPage from "../../pageobjects/SearchPage.js";
 
 describe("Search Item Count Case Insensitivity Test", () => {
-    let driver;
     let searchPage;
     let countLower, countUpper, countMixed;
 
     beforeAll(async () => {
-        driver = await new Builder().forBrowser("chrome").build();
-        searchPage = new SearchPage(driver);
-    });
-
-    afterAll(async () => {
-        await driver.quit();
+        searchPage = new SearchPage();
     });
 
     it("Should return item count for lowercase search term", async () => {

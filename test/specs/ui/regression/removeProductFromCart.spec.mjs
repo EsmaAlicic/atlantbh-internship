@@ -1,43 +1,29 @@
-import { Builder, By, until } from 'selenium-webdriver';
 import RemoveProductPage from '../../pageobjects/RemoveProductPage.js';
 
 describe("Remove product from cart test", () => {
-    let driver;
-    let removeProductPage;
-
-    beforeAll(async () => {
-        driver = await new Builder().forBrowser("chrome").build();
-        await driver.manage().setTimeouts({ implicit: 5000 });
-        removeProductPage = new RemoveProductPage(driver);
-    });
-
-    afterAll(async () => {
-        await driver.quit();
-    });
 
     it("Should successfully remove product from the cart", async () => {
-        await removeProductPage.open();
+        await RemoveProductPage.open();
 
-        await removeProductPage.selectCategory("Jackets");
-        const currentUrl = await driver.getCurrentUrl();
-        expect(currentUrl).toContain("jackets");
+        await RemoveProductPage.selectCategory();
+        let currentUrl = await browser.getUrl();
+        expect(currentUrl).toContain(RemoveProductPage.expectedCategoryUrl);
 
-        await removeProductPage.selectProduct("Olivia 1/4 Zip Light Jacket");
-        const currentUrl2 = await driver.getCurrentUrl();
-        expect(currentUrl2).toContain("olivia-1-4-zip-light-jacket");
+        await RemoveProductPage.selectProduct();
+        let currentUrl2 = await browser.getUrl();
+        expect(currentUrl2).toContain(RemoveProductPage.expectedProductUrl);
 
+        await RemoveProductPage.addToCart("S", "Black");
 
-        await removeProductPage.addToCart("S", "Black");
-
-        await removeProductPage.openCart();
-        const currentUrl3 = await driver.getCurrentUrl();
+        await RemoveProductPage.openCart();
+        let currentUrl3 = await browser.getUrl();
         expect(currentUrl3).toContain("checkout/cart");
     });
 
     it("Should successfully remove product from the cart", async () => {
-        await removeProductPage.removeProductFromCart();
+        await RemoveProductPage.removeProductFromCart();
 
-        const removeElements = await driver.findElements(By.css('a.action.action-delete[title="Remove item"]'));
+        const removeElements = await RemoveProductPage.removeButtons;
         expect(removeElements.length).toBe(0);
     });
 });

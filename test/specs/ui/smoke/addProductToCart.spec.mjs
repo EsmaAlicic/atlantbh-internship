@@ -1,17 +1,10 @@
-import { Builder } from "selenium-webdriver";
-import AddToCartPage from "../../pageobjects/AddToCartPage.js";
+import AddToCartPage from "../../../pageobjects/AddToCartPage.js";
 
 describe("Add to Cart Test", () => {
-    let driver;
     let addToCartPage;
 
-    beforeAll(async () => {
-        driver = await new Builder().forBrowser("chrome").build();
-        addToCartPage = new AddToCartPage(driver);
-    });
-
-    afterAll(async () => {
-        await driver.quit();
+    beforeAll(() => {
+        addToCartPage = new AddToCartPage();
     });
 
     it("Should successfully add a product to the cart", async () => {
@@ -22,7 +15,7 @@ describe("Add to Cart Test", () => {
         await addToCartPage.isProductAdded();
 
         const isProductAdded = await addToCartPage.isProductAdded();
-        expect(isProductAdded).toBe(true); 
+        expect(isProductAdded).toBe(true);
         console.log("The product has been successfully added to the cart.");
     });
 });

@@ -1,6 +1,6 @@
 export default class RegisterPage {
     get createAccountLink() {
-        return $("//a[text()='Create an Account']");
+        return $('a[href*="create"]');
     }
 
     get firstNameInput() {
@@ -28,20 +28,14 @@ export default class RegisterPage {
     }
 
     async open() {
-        await browser.url('/'); // uses baseUrl from wdio.conf.js
+        await browser.url('/');
     }
 
     async clickCreateAccount() {
         await this.createAccountLink.waitForClickable();
         await this.createAccountLink.click();
-        await browser.waitUntil(
-            async () => (await browser.getUrl()).includes("customer/account/create"),
-            {
-                timeout: 1000,
-                timeoutMsg: 'URL did not contain "customer/account/create" within the timeout'
-            }
-        );
-    }
+        await browser.waitUntil(async () => (await browser.getUrl()).includes("customer/account/create"));
+    }   
 
     async fillForm(firstName, lastName, email, password) {
         await this.firstNameInput.waitForDisplayed();
@@ -58,12 +52,6 @@ export default class RegisterPage {
     }
 
     async isAccountCreated() {
-        await browser.waitUntil(
-            async () => (await browser.getUrl()).includes("customer/account"),
-            {
-                timeout: 1000,
-                timeoutMsg: 'User account was not created - URL does not contain "customer/account"'
-            }
-        );
-    }
+        await browser.waitUntil(async () => (await browser.getUrl()).includes("customer/account"));
+    }   
 }

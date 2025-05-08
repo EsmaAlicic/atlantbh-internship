@@ -1,93 +1,100 @@
-import { By, until } from 'selenium-webdriver';
-
 export default class RemoveProductPage {
-    constructor(driver) {
-        this.driver = driver;
-        this.url = 'https://magento.softwaretestingboard.com/what-is-new.html';
+    get url() {
+        return `${this.baseUrl}/what-is-new.html`;
     }
 
-    async getJacketsLink() {
-        return await this.driver.findElement(By.linkText('Jackets'));
+    get categoryName() {
+        return 'Jackets';
     }
 
-    async getProductImage() {
-        return await this.driver.findElement(By.css('img[alt="Olivia 1/4 Zip Light Jacket"]'));
+    get productName() {
+        return 'Olivia 1/4 Zip Light Jacket';
     }
 
-    async getSizeOption(size) {
-        return await this.driver.findElement(By.css(`div.swatch-option.text[option-label="${size}"]`));
+    get expectedCategoryUrl() {
+        return 'jackets';
     }
 
-    async getColorOption(color) {
-        return await this.driver.findElement(By.css(`div.swatch-option.color[option-label="${color}"]`));
+    get expectedProductUrl() {
+        return 'olivia-1-4-zip-light-jacket';
     }
 
-    async getAddToCartButton() {
-        return await this.driver.findElement(By.id('product-addtocart-button'));
+    get jacketsLink() {
+        return $('a=Jackets');
     }
 
-    async getCartIcon() {
-        return await this.driver.findElement(By.css('[data-block="minicart"] .action.showcart'));
+    get productImage() {
+        return $(`img[alt*="${this.productName}"]`);
     }
 
-    async getViewCartLink() {
-        return await this.driver.findElement(By.css('a.action.viewcart'));
+    getSizeOption(size) {
+        return $(`div.swatch-option.text[option-label="${size}"]`);
     }
 
-    async getRemoveButton() {
-        return await this.driver.findElement(By.css('a.action.action-delete[title="Remove item"]'));
+    getColorOption(color) {
+        return $(`div.swatch-option.color[option-label="${color}"]`);
+    }
+
+    get addToCartButton() {
+        return $('#product-addtocart-button');
+    }
+
+    get cartIcon() {
+        return $('[data-block="minicart"] .action.showcart');
+    }
+
+    get viewCartLink() {
+        return $('a.action.viewcart');
+    }
+
+    get removeButton() {
+        return $('a.action.action-delete[title="Remove item"]');
+    }
+
+    get removeButtons() {
+        return $$('a.action.action-delete[title="Remove item"]');
     }
 
     async open() {
-        await this.driver.get(this.url);
+        await browser.url(this.url);
     }
 
-    async selectCategory(categoryName) {
-        if (categoryName === "Jackets") {
-            const jackets = await this.getJacketsLink();
-            await jackets.click();
-        }
+    async selectCategory() {
+        await this.jacketsLink.click();
     }
 
-    async selectProduct(productName) {
-        if (productName === "Olivia 1/4 Zip Light Jacket") {
-            const product = await this.getProductImage();
-            await product.click();
-        }
+    async selectProduct() {
+        await this.productImage.click();
     }
 
     async addToCart(size, color) {
         const sizeOption = await this.getSizeOption(size);
-        await this.driver.wait(until.elementIsVisible(sizeOption), 1000);
-        await this.driver.executeScript("arguments[0].scrollIntoView(true);", sizeOption);
+        await sizeOption.waitForDisplayed();
+        await sizeOption.scrollIntoView();
         await sizeOption.click();
 
         const colorOption = await this.getColorOption(color);
-        await this.driver.wait(until.elementIsVisible(colorOption));
-        await this.driver.executeScript("arguments[0].scrollIntoView(true);", colorOption);
+        await colorOption.waitForDisplayed();
+        await colorOption.scrollIntoView();
         await colorOption.click();
 
-        const addToCartBtn = await this.getAddToCartButton();
-        await addToCartBtn.click();
-        await this.driver.sleep(3000); 
+        await this.addToCartButton.click();
+        await browser.pause(3000); 
     }
 
     async openCart() {
-        const cartIcon = await this.getCartIcon();
-        await cartIcon.click();
-        await this.driver.wait(until.elementLocated(By.css('a.action.viewcart')));
-        const viewCart = await this.getViewCartLink();
-        await viewCart.click();
+        await this.cartIcon.click();
+        await this.viewCartLink.waitForDisplayed();
+        await this.viewCartLink.click();
     }
 
     async removeProductFromCart() {
-        const removeBtn = await this.driver.wait(until.elementLocated(By.css('a.action.action-delete[title="Remove item"]')));
-        await this.driver.wait(until.elementIsVisible(removeBtn));
-        await this.driver.executeScript("arguments[0].scrollIntoView(true);", removeBtn);
-        await removeBtn.click();
+        await this.removeButton.waitForDisplayed();
+        await this.removeButton.scrollIntoView();
+        await this.removeButton.click();
 
         console.log("Product successfully removed from the cart!");
 
-        await this.driver.wait(until.stalenessOf(removeBtn));
+        await this.removeButton.waitForExist({ reverse: true }); 
     }
 }

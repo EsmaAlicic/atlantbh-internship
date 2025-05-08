@@ -10,7 +10,7 @@ import {
   newAuthor,
   getAuthorId,
   updatedAuthorData
-} from '../../../api/authorTestData.js';
+} from '../../../apiData/authorTestData.js';
   
 describe('Regression Tests - Authors API', () => {
   it('Should return 200 and the created author', async () => {

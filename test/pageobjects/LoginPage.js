@@ -1,38 +1,39 @@
-import { By, until } from 'selenium-webdriver';
-
 export default class LoginPage {
-    constructor(driver) {
-        this.driver = driver;
+    constructor() {
         this.baseUrl = browser.options.baseUrl;
     }
 
     get signInLink() {
-        return this.driver.findElement(By.xpath("//li[@class='authorization-link']/a[contains(text(), 'Sign In')]"));
+        return $('li.authorization-link a:contains("Sign In")');
     }    
 
     async open() {
-        await this.driver.get(this.baseUrl);
+        await browser.url(this.baseUrl);
     }
 
     async enterEmail(email) {
-        let emailInput = await this.driver.wait(until.elementLocated(By.id('email')));
-        await emailInput.sendKeys(email);
+        const emailInput = await $('#email');
+        await emailInput.waitForDisplayed();
+        await emailInput.setValue(email);
     }
 
     async enterPassword(password) {
-        let passwordInput = await this.driver.wait(until.elementLocated(By.id('pass')));
-        await passwordInput.sendKeys(password);
+        const passwordInput = await $('#pass');
+        await passwordInput.waitForDisplayed();
+        await passwordInput.setValue(password);
     }
 
     async clickSignIn() {
-        let signInButton = await this.driver.wait(until.elementLocated(By.id('send2')));
+        const signInButton = await $('#send2');
+        await signInButton.waitForDisplayed();
         await signInButton.click();
     }
 
     async clickSignInLink() {
-        const link = await this.driver.wait(until.elementLocated(By.xpath("//li[@class='authorization-link']/a[contains(text(), 'Sign In')]")));
+        const link = await $('li.authorization-link a:contains("Sign In")');
+        await link.waitForDisplayed();
         await link.click();
-        await this.driver.wait(until.elementLocated(By.id('email')));
+        const emailInput = await $('#email');
+        await emailInput.waitForDisplayed();
     }
-    
 }

@@ -10,7 +10,7 @@ import {
   newCoverPhoto,
   getCoverPhotoId,
   updatedCoverPhotoData
-} from '../../../api/coverphotoTestData.js';
+} from '../../../apiData/coverphotoTestData.js';
   
 describe('Regression Tests - CoverPhotos API', () => {
   it('Should return 200 and the created cover photo', async () => {

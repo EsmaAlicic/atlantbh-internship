@@ -1,20 +1,13 @@
-import { Builder, By } from 'selenium-webdriver';
-import LoginPage from '../../pageobjects/LoginPage.js';
-import AccountPage from '../../pageobjects/AccountPage.js';
+import LoginPage from '../../../pageobjects/LoginPage.js';
+import AccountPage from '../../../pageobjects/AccountPage.js';
 
 describe('Sign Out Test', () => {
-    let driver;
     let loginPage;
     let accountPage;
 
-    beforeAll(async () => {
-        driver = await new Builder().forBrowser('chrome').build();
-        loginPage = new LoginPage(driver);
-        accountPage = new AccountPage(driver);
-    });
-
-    afterAll(async () => {
-        await driver.quit();
+    beforeAll(() => {
+        loginPage = new LoginPage();
+        accountPage = new AccountPage();
     });
 
     it('should sign in successfully', async () => {

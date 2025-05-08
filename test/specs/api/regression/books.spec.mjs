@@ -8,7 +8,7 @@ import {
 import {
   updatedBookData,
   getBookId
-} from '../../../api/bookTestData.js';
+} from '../../../apiData/bookTestData.js';
   
 describe('Regression Tests - Books API', () => {
   it('Should return 200 and a list of books', async () => {

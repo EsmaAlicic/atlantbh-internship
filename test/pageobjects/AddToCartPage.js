@@ -1,73 +1,86 @@
-import { By, until } from "selenium-webdriver";
-
 export default class AddToCartPage {
-    constructor(driver) {
-        this.driver = driver;
+    constructor() {
         this.baseUrl = browser.options.baseUrl;
     }
 
-    // GETTERS
     get whatsNewButton() {
-        return this.driver.findElement(By.id("ui-id-3"));
+        return $('#ui-id-3');
     }
 
     get promoLink() {
-        return this.driver.findElement(By.css("a.block-promo.new-main"));
+        return $('a.block-promo.new-main');
     }
 
     get productLink() {
-        return this.driver.findElement(By.xpath("//a[@class='product-item-link' and contains(text(), 'Elisa EverCool')]"));
+        return $('.product-item-link:contains("Elisa EverCool")'); 
     }  
 
     get sizeOption() {
-        return this.driver.findElement(By.css('*[id="option-label-size-143-item-167"]')); // S
+        return $('#option-label-size-143-item-167');
     }
 
     get colorOption() {
-        return this.driver.findElement(By.id("option-label-color-93-item-57")); // Purple
+        return $('#option-label-color-93-item-57');
     }
 
     get addToCartButton() {
-        return this.driver.findElement(By.id("product-addtocart-button"));
+        return $('#product-addtocart-button');
     }
 
     get successMessage() {
-        return this.driver.findElement(By.css(".message-success.success.message"));
+        return $('.message-success.success.message');
     }
 
-    // METHODS
+    get expectedPromoUrl() { 
+        return 'yoga-new.html'; 
+    }
+
+    get expectedProductUrl() { 
+        return 'elisa-evercool-trade-tee.html';
+    }
+
     async open() {
-        await this.driver.get(this.baseUrl);
+        await browser.url(this.baseUrl);
     }
 
     async navigateToProduct() {
-        await this.driver.wait(until.elementLocated(By.id("ui-id-3")));  
+        await this.whatsNewButton.waitForDisplayed();  
         await this.whatsNewButton.click();  
 
-        await this.driver.wait(until.elementLocated(By.css("a.block-promo.new-main")));
+        await this.promoLink.waitForDisplayed();
         await this.promoLink.click();
-        await this.driver.wait(until.urlContains("yoga-new.html"));
 
+        await browser.waitUntil(async () => (await browser.getUrl()).includes(this.expectedPromoUrl), {
+            timeout: 10000,
+            timeoutMsg: 'Expected promo URL was not found'
+        });
+        
+        await this.productLink.waitForDisplayed();
         await this.productLink.click();
-        await this.driver.wait(until.urlContains("elisa-evercool-trade-tee.html"));
+
+        await browser.waitUntil(async () => (await browser.getUrl()).includes(this.expectedProductUrl), {
+            timeout: 10000,
+            timeoutMsg: 'Expected product URL was not found'
+        });
     }
 
     async selectOptions() {
-        await this.driver.wait(until.elementLocated(By.css('*[id="option-label-size-143-item-167"]')));
+        await this.sizeOption.waitForDisplayed();
         await this.sizeOption.click();
 
-        await this.driver.wait(until.elementIsVisible(this.colorOption));
+        await this.colorOption.waitForDisplayed();
         await this.colorOption.click();
     }
 
     async addToCart() {
-        await this.driver.wait(until.elementIsVisible(this.addToCartButton));
+        await this.addToCartButton.waitForDisplayed();
         await this.addToCartButton.click();
     }
 
     async isProductAdded() {
-        await this.driver.wait(until.elementLocated(By.css(".message-success.success.message")));
-        await this.driver.wait(until.elementTextContains(this.successMessage, "You added"));
-        return true;
+        await this.successMessage.waitForDisplayed();
+        const messageText = await this.successMessage.getText();
+        return messageText.includes("You added");
     }
 }
+

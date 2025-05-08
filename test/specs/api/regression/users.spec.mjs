@@ -8,7 +8,7 @@ import {
 import {
   getUserId,
   updatedUserData
-} from '../../../api/userTestData.js';
+} from '../../../apiData/userTestData.js';
   
 describe('Regression Tests - Users API', () => {
   it('Should return 200 and a list of users', async () => {

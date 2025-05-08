@@ -39,9 +39,9 @@ export async function getAuthorByIdData(id) {
   }
 }
 
-export async function getAuthorsByBookIdData(idBook) {
+export async function getAuthorsByBookIdData(id) {
   try {
-    const endpointConfig = getAuthorsByBookId(idBook);
+    const endpointConfig = getAuthorsByBookId(id);
     const response = await httpClient({
       method: endpointConfig.method,
       url: endpointConfig.url,

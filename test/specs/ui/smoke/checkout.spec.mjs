@@ -1,25 +1,16 @@
-import { Builder } from "selenium-webdriver";
-import LoginPage from '../../pageobjects/LoginPage.js';
-import CheckoutPage from '../../pageobjects/CheckoutPage.js';
-import AddToCartPage from "../../pageobjects/AddToCartPage.js";
-
-const loginPage = new LoginPage(driver);
-const addToCartPage = new AddToCartPage(driver);
-const checkoutPage = new CheckoutPage(driver);
+import LoginPage from '../../../pageobjects/LoginPage.js';
+import CheckoutPage from '../../../pageobjects/CheckoutPage.js';
+import AddToCartPage from '../../../pageobjects/AddToCartPage.js';
 
 describe("E-commerce Checkout Flow", () => {
-    let driver;
     let addToCartPage;
     let loginPage;
     let checkoutPage;
 
-    fit(async () => {
-        driver = await new Builder().forBrowser("chrome").build();
-        console.log('Driver check!' + driver);
-    });
-    
-    afterAll(async () => {
-        await driver.quit();
+    beforeAll(() => {
+        addToCartPage = new AddToCartPage();
+        loginPage = new LoginPage();
+        checkoutPage = new CheckoutPage();
     });
 
     it('Should sign in successfully', async () => {
@@ -49,9 +40,9 @@ describe("E-commerce Checkout Flow", () => {
         await checkoutPage.clickNext();
         await checkoutPage.placeOrder();
 
-        await driver.wait(async () => {
-            return (await driver.getCurrentUrl()).includes("checkout/onepage/success");
-        }, 10000);
+        await browser.waitUntil(async () => {
+            return (await browser.getUrl()).includes("checkout/onepage/success");
+        }, { timeout: 10000, timeoutMsg: 'Checkout success page not reached' });
 
         await checkoutPage.continueShopping();
 
