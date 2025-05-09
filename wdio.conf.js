@@ -5,6 +5,7 @@ export const config = {
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
+    baseUrl: 'https://magento.softwaretestingboard.com',
     //
     // ==================
     // Specify Test Files
@@ -21,22 +22,34 @@ export const config = {
     // of the config file unless it's absolute.
     //
     suites: {
-        smoke: {
-            register: [
-                './test/specs/smoke/register.spec.mjs'
-            ],
-            login: [
-                './test/specs/smoke/login.spec.mjs'
-            ],
-            homePage: [
-                './test/specs/smoke/homepage.spec.mjs'
-            ]
-        },
-        regression: {
-            search: [
-                './test/specs/regression/search.spec.js'
-            ]
-        }
+        smoke: [
+            './test/specs/smoke/newUserRegistration.spec.mjs',
+            './test/specs/smoke/addProductToCart.spec.mjs',
+            './test/specs/smoke/checkout.spec.mjs',
+            './test/specs/smoke/SignOut.spec.mjs'
+        ],
+        regression: [
+            './test/specs/regression/searchItemCaseSensitive.spec.mjs',
+            './test/specs/regression/removeProductFromCart.spec.mjs'
+        ],
+        register: [
+            './test/specs/ui/smoke/newUserRegistration.spec.mjs'
+            ],              
+        addProduct: [
+            './test/specs/smoke/addProductToCart.spec.mjs'
+        ],
+        checkout: [
+            './test/specs/smoke/checkout.spec.mjs'
+        ],
+        signOut: [
+            './test/specs/smoke/signOut.spec.mjs'
+        ],
+        search: [
+            './test/specs/regression/searchItemCaseSensitive.spec.mjs'
+        ],
+        remove: [
+            './test/specs/regression/removeProductFromCart.spec.mjs'
+        ]
     },
     //
     // ============

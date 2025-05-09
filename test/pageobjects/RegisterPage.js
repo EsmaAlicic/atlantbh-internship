@@ -1,65 +1,57 @@
-import { By, until } from "selenium-webdriver";
-
 export default class RegisterPage {
-    constructor(driver) {
-        this.driver = driver;
-        this.url = "https://magento.softwaretestingboard.com/what-is-new.html";
-    }
-
-    // GETTERI
     get createAccountLink() {
-        return this.driver.findElement(By.xpath('//a[@href="https://magento.softwaretestingboard.com/customer/account/create/"]'));
+        return $('a[href*="create"]');
     }
 
     get firstNameInput() {
-        return this.driver.findElement(By.id("firstname"));
+        return $('#firstname');
     }
 
     get lastNameInput() {
-        return this.driver.findElement(By.id("lastname"));
+        return $('#lastname');
     }
 
     get emailInput() {
-        return this.driver.findElement(By.id("email_address"));
+        return $('#email_address');
     }
 
     get passwordInput() {
-        return this.driver.findElement(By.id("password"));
+        return $('#password');
     }
 
     get confirmPasswordInput() {
-        return this.driver.findElement(By.id("password-confirmation"));
+        return $('#password-confirmation');
     }
 
     get submitButton() {
-        return this.driver.findElement(By.css("button.action.submit.primary[title='Create an Account']"));
+        return $("button.action.submit.primary[title='Create an Account']");
     }
 
-    // METODE
     async open() {
-        await this.driver.get(this.url);
+        await browser.url('/');
     }
 
     async clickCreateAccount() {
+        await this.createAccountLink.waitForClickable();
         await this.createAccountLink.click();
-        await this.driver.wait(until.urlContains("customer/account/create"));
-    }
+        await browser.waitUntil(async () => (await browser.getUrl()).includes("customer/account/create"));
+    }   
 
     async fillForm(firstName, lastName, email, password) {
-        await this.driver.wait(until.elementLocated(By.id("firstname")), 10000);
-        await this.firstNameInput.then(el => el.sendKeys(firstName));
-        await this.lastNameInput.then(el => el.sendKeys(lastName));
-        await this.emailInput.then(el => el.sendKeys(email));
-        await this.passwordInput.then(el => el.sendKeys(password));
-        await this.confirmPasswordInput.then(el => el.sendKeys(password));
+        await this.firstNameInput.waitForDisplayed();
+        await this.firstNameInput.setValue(firstName);
+        await this.lastNameInput.setValue(lastName);
+        await this.emailInput.setValue(email);
+        await this.passwordInput.setValue(password);
+        await this.confirmPasswordInput.setValue(password);
     }
 
     async submitForm() {
-        await this.driver.wait(until.elementLocated(By.css("button.action.submit.primary[title='Create an Account']")), 10000);
-        await this.submitButton.then(btn => btn.click());
+        await this.submitButton.waitForClickable();
+        await this.submitButton.click();
     }
 
     async isAccountCreated() {
-        await this.driver.wait(until.urlContains("customer/account"), 10000);
-    }
+        await browser.waitUntil(async () => (await browser.getUrl()).includes("customer/account"));
+    }   
 }
