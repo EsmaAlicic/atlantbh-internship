@@ -1,3 +1,8 @@
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const argv = yargs(hideBin(process.argv)).argv;
+
 export const config = {
     //
     // ====================
@@ -21,6 +26,10 @@ export const config = {
     // The path of the spec files will be resolved relative from the directory of
     // of the config file unless it's absolute.
     //
+    globals: {
+        username: argv.username || process.env.TEST_USERNAME || 'default_username',
+        password: argv.password || process.env.TEST_PASSWORD || 'default_password'
+    },
     suites: {
         smoke: [
             './test/specs/smoke/newUserRegistration.spec.mjs',
@@ -49,8 +58,43 @@ export const config = {
         ],
         remove: [
             './test/specs/regression/removeProductFromCart.spec.mjs'
-        ]
-    },
+        ],
+        
+    smokeApi: [
+        './test/specs/api/smoke/activities.spec.mjs',
+        './test/specs/api/smoke/authors.spec.mjs',
+        './test/specs/api/smoke/books.spec.mjs',
+        './test/specs/api/smoke/coverphotos.spec.mjs',
+        './test/specs/api/smoke/users.spec.mjs'
+    ],
+    regressionApi: [
+        './test/specs/api/regression/activities.spec.mjs',
+        './test/specs/api/regression/authors.spec.mjs',
+        './test/specs/api/regression/books.spec.mjs',
+        './test/specs/api/regression/coverphotos.spec.mjs',
+        './test/specs/api/regression/users.spec.mjs'
+    ],
+    activities: [
+        './test/specs/api/smoke/activities.spec.mjs',
+        './test/specs/api/regression/activities.spec.mjs'
+    ],
+    authors: [
+        './test/specs/api/smoke/authors.spec.mjs',
+        './test/specs/api/regression/authors.spec.mjs'
+    ],
+    books: [
+        './test/specs/api/smoke/books.spec.mjs',
+        './test/specs/api/regression/books.spec.mjs'
+    ],
+    coverphotos: [
+        './test/specs/api/smoke/coverphotos.spec.mjs',
+        './test/specs/api/regression/coverphotos.spec.mjs'
+    ],
+    users: [
+        './test/specs/api/smoke/users.spec.mjs',
+        './test/specs/api/regression/users.spec.mjs'
+    ]
+},
     //
     // ============
     // Capabilities
