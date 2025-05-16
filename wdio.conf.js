@@ -31,13 +31,13 @@ export const config = {
         password: argv.password || process.env.TEST_PASSWORD || 'default_password'
     },
     suites: {
-        smoke: [
+        smokeUi: [
             './test/specs/smoke/newUserRegistration.spec.mjs',
             './test/specs/smoke/addProductToCart.spec.mjs',
             './test/specs/smoke/checkout.spec.mjs',
             './test/specs/smoke/SignOut.spec.mjs'
         ],
-        regression: [
+        regressionUi: [
             './test/specs/regression/searchItemCaseSensitive.spec.mjs',
             './test/specs/regression/removeProductFromCart.spec.mjs'
         ],
@@ -60,41 +60,41 @@ export const config = {
             './test/specs/regression/removeProductFromCart.spec.mjs'
         ],
         
-    smokeApi: [
-        './test/specs/api/smoke/activities.spec.mjs',
-        './test/specs/api/smoke/authors.spec.mjs',
-        './test/specs/api/smoke/books.spec.mjs',
-        './test/specs/api/smoke/coverphotos.spec.mjs',
-        './test/specs/api/smoke/users.spec.mjs'
-    ],
-    regressionApi: [
-        './test/specs/api/regression/activities.spec.mjs',
-        './test/specs/api/regression/authors.spec.mjs',
-        './test/specs/api/regression/books.spec.mjs',
-        './test/specs/api/regression/coverphotos.spec.mjs',
-        './test/specs/api/regression/users.spec.mjs'
-    ],
-    activities: [
-        './test/specs/api/smoke/activities.spec.mjs',
-        './test/specs/api/regression/activities.spec.mjs'
-    ],
-    authors: [
-        './test/specs/api/smoke/authors.spec.mjs',
-        './test/specs/api/regression/authors.spec.mjs'
-    ],
-    books: [
-        './test/specs/api/smoke/books.spec.mjs',
-        './test/specs/api/regression/books.spec.mjs'
-    ],
-    coverphotos: [
-        './test/specs/api/smoke/coverphotos.spec.mjs',
-        './test/specs/api/regression/coverphotos.spec.mjs'
-    ],
-    users: [
-        './test/specs/api/smoke/users.spec.mjs',
-        './test/specs/api/regression/users.spec.mjs'
-    ]
-},
+        smokeApi: [
+            './test/specs/api/smoke/activities.spec.mjs',
+            './test/specs/api/smoke/authors.spec.mjs',
+            './test/specs/api/smoke/books.spec.mjs',
+            './test/specs/api/smoke/coverphotos.spec.mjs',
+            './test/specs/api/smoke/users.spec.mjs'
+        ],
+        regressionApi: [
+            './test/specs/api/regression/activities.spec.mjs',
+            './test/specs/api/regression/authors.spec.mjs',
+            './test/specs/api/regression/books.spec.mjs',
+            './test/specs/api/regression/coverphotos.spec.mjs',
+            './test/specs/api/regression/users.spec.mjs'
+        ],
+        activities: [
+            './test/specs/api/smoke/activities.spec.mjs',
+            './test/specs/api/regression/activities.spec.mjs'
+        ],
+        authors: [
+            './test/specs/api/smoke/authors.spec.mjs',
+            './test/specs/api/regression/authors.spec.mjs'
+        ],
+        books: [
+            './test/specs/api/smoke/books.spec.mjs',
+            './test/specs/api/regression/books.spec.mjs'
+        ],
+        coverphotos: [
+            './test/specs/api/smoke/coverphotos.spec.mjs',
+            './test/specs/api/regression/coverphotos.spec.mjs'
+        ],
+        users: [
+            './test/specs/api/smoke/users.spec.mjs',
+            './test/specs/api/regression/users.spec.mjs'
+        ]
+    },
     //
     // ============
     // Capabilities
