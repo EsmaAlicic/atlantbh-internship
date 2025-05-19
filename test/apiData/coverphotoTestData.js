@@ -1,15 +1,17 @@
+import { faker } from '@faker-js/faker';
+
 const newCoverPhoto = {
-  id: 222,
-  idBook: 10,
-  url: "https://example.com/cover.jpg"
+  id: faker.number.int({ min: 1, max: 100 }),
+  idBook: faker.number.int({ min: 1, max: 10 }),
+  url: faker.image.url() 
 };
 
-const getCoverPhotoId = () => 32;
+const getCoverPhotoId = () => 3;
 
 const updatedCoverPhotoData = {
-  id: 32,
-  idBook: 10,
-  url: "https://example.com/updated-cover.jpg"
+  id: getCoverPhotoId(),
+  idBook: faker.number.int({ min: 1, max: 10 }),
+  url: faker.image.url() 
 };
 
 export { newCoverPhoto, getCoverPhotoId, updatedCoverPhotoData };

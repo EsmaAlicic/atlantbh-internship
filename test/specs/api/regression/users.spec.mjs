@@ -1,3 +1,5 @@
+/* global username, password */
+
 import {
   getUsersData,
   getUserByIdData,

@@ -1,15 +1,18 @@
+const username = process.env.TEST_USERNAME;
+const password = process.env.TEST_PASSWORD;
+
 const newUser = {
-  id: 15,
-  userName: "testuser",
-  password: "password123"
+  id: parseInt(process.env.TEST_USER_ID),
+  userName: username,
+  password: password
 };
 
-const getUserId = () => 7;
+const getUserId = () => 1;
 
 const updatedUserData = {
-  id: 7,
-  userName: "updateduser",
-  password: "newpassword"
+  id: getUserId(),
+  userName: `updated_${username}`,
+  password: `new_${password}`
 };
 
 export { newUser, getUserId, updatedUserData };
